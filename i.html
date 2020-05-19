@@ -24,7 +24,7 @@
     </a-scene> -->
 
     <script>
-        alert(6);
+        alert(7);
         AFRAME.createAScene({
             id: 'scene1',
             attributes: {
@@ -91,13 +91,94 @@
 
 
                 var marker = scene.addAnEntity('a-marker', { preset: 'hiro' });
-                marker.addAnEntity('a-box', '');
+                this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
+                this.clickNum = AFRAME.$$('.clickable').length;
+
+                this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
+
+                // marker.addAnEntity('a-box', '');
+
 
                 // scene.addEntities({
                 //     'a-marker': { attributes: { preset: 'hiro' }, children: [{ 'a-box': {} }] },
                 //     'a-entity': { camera: '' }
                 // });
             },
+            showResult: function (isPass) {
+                var text = isPass ? 'Pass!\nNext Level\n' : 'Again\n';
+                var ts = Date.now() + 3000; // after 3 second
+                var id = setInterval(function () {
+                    var now = Date.now();
+                    if (now > ts) {
+                        clearInterval(id);
+                        AFRAME.loadScene('scene1'); // reload
+                        return;
+                    }
+                    var sec = Math.ceil((ts - now) * 0.001);
+                    this.text.setAttribute('value', text + sec);
+                }.bind(this), 200);
+                'Pass!\nNext Level\n3'
+
+            },
+            mouseDown: function () {
+                var target = this.intersectedEls[0];
+                if (target && !target.handled) {
+                    console.log('yes');
+                    target.handled = true;
+                    this.handleMap(target);
+                    if (--this.clickNum < 1) {
+                        setTimeout(function () {
+                            // check where you win.
+                            for (var z = 0; z < this.mapLen; z++) {
+                                for (var x = 0; x < this.mapLen; x++) {
+                                    if (this.map[z][x] < 1) {
+                                        return this.showResult(false);
+                                    }
+                                }
+                            }
+                            localStorage.lv = ++this.lv;
+                            this.showResult(true);
+                        }.bind(this), 500);
+                    }
+                }
+            },
+            isEmptyLine: function (z, x1, x2) {
+                for (var x = x1; x <= x2; x++) {
+                    if (this.map[z][x]) return false;
+                }
+                return true;
+            },
+            handleMap: function (box) {
+                // find the rect
+                var leftX = box.xx, rightX = box.xx;
+                var topZ = box.zz, bottomZ = box.zz;
+                // first -
+                while (this.map[box.zz][leftX - 1] < 1) leftX--;
+                while (this.map[box.zz][rightX + 1] < 1) rightX++;
+                // then |
+                while (this.isEmptyLine(topZ - 1, leftX, rightX)) topZ--;
+                while (this.isEmptyLine(bottomZ + 1, leftX, rightX)) bottomZ++;
+
+                for (var z = topZ; z <= bottomZ; z++) {
+                    for (var x = leftX; x <= rightX; x++) {
+                        if (!this.map[z][x]) this.map[z][x] = box.idx;
+                    }
+                }
+
+                var scaleX = (rightX - leftX + 1) * this.size;
+                var scaleZ = (bottomZ - topZ + 1) * this.size;
+                var x = leftX * this.size + this.gap + (rightX - leftX) * 0.5 * this.size;
+                var z = topZ * this.size + this.gap + (bottomZ - topZ) * 0.5 * this.size;
+
+                box.object3D.position.x = x;
+                box.object3D.position.z = z;
+                box.object3D.scale.x = scaleX;
+                box.object3D.scale.z = scaleZ;
+            },
+            onRemove: function () {
+                document.removeEventListener('mousedown', this.mouseDown.bind(this));
+                document.removeEventListener('click', this.mouseDown.bind(this));
+            }
         });
 // AFRAME.loadScene('scene1'); // load the scene
     </script>
