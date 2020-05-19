@@ -23,7 +23,7 @@
     </a-scene> -->
 
     <script>
-        alert(4);
+        alert(5);
         AFRAME.createAScene({
             id: 'scene1',
             attributes: {
@@ -34,6 +34,7 @@
                 var marker = scene.addAnEntity('a-marker', { preset: 'hiro' });
                 marker.addAnEntity('a-box', '');
                 var camera = scene.addAnEntity('a-entity', { camera: '' });
+                this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 800, objects: '.clickable' });
 
                 // scene.addEntities({
                 //     'a-marker': { attributes: { preset: 'hiro' }, children: [{ 'a-box': {} }] },
