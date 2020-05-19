@@ -4,7 +4,7 @@ var scene1 = {
         embedded: '',
         // arjs: 'sourceType: webcam; debugUIEnabled: false;',
         // arjs: 'trackingMethod: best; sourceType: webcam;debugUIEnabled: false;',
-        arjd: ''
+        arjs: ''
     },
     size: 0.2, // change according the map to make the plane is 1*1
     colors: ["#4CC3D9", "#EF2D5E", "#FFC65D", '#ec2def', '#2d3cef', '#1bec65', '#ecbf1b', '#ec1b1b', "#a8aae8", "#afe8a8", '#e8a8a8'], // #f55dff
@@ -60,16 +60,17 @@ var scene1 = {
             } else return;
         }
 
-        var camera = scene.addAnEntity('a-entity', { 'look-controls': '', camera: '' });
-        this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 800, objects: '.clickable' });
+        var camera = scene.addAnEntity('a-entity', { camera: '' });
+        // this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 800, objects: '.clickable' });
 
         var marker = scene.addAnEntity('a-marker', { preset: 'hiro' });
-        this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
-        this.clickNum = AFRAME.$$('.clickable').length;
+        // this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
+        // this.clickNum = AFRAME.$$('.clickable').length;
 
-        this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
+        // this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
     },
     onLoaded: function (scene) { // after the scene is loaded.
+        return;
         this.intersectedEls = this.cursor.components.raycaster.intersectedEls;
 
         document.addEventListener('mousedown', this.mouseDown.bind(this));
