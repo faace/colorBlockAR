@@ -1,10 +1,8 @@
-var scene1 = {
+AFRAME.createAScene({
     id: 'scene1',
     attributes: {
         embedded: '',
-        // arjs: 'sourceType: webcam; debugUIEnabled: false;',
-        // arjs: 'trackingMethod: best; sourceType: webcam;debugUIEnabled: false;',
-        arjs: ''
+        arjs: '',
     },
     size: 0.2, // change according the map to make the plane is 1*1
     colors: ["#4CC3D9", "#EF2D5E", "#FFC65D", '#ec2def', '#2d3cef', '#1bec65', '#ecbf1b', '#ec1b1b', "#a8aae8", "#afe8a8", '#e8a8a8'], // #f55dff
@@ -51,7 +49,8 @@ var scene1 = {
         }
         return plane;
     },
-    onInit: function (scene) { // when the scene is start to initialized.
+
+    onInit: function (scene) {
         this.lv = localStorage.lv || 0;
         if (this.lv >= datas.length) {
             alert('You have completed all levels!');
@@ -61,23 +60,24 @@ var scene1 = {
         }
 
         var camera = scene.addAnEntity('a-entity', { camera: '' });
-        // this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 800, objects: '.clickable' });
+        this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 500, objects: '.clickable' });
+
 
         var marker = scene.addAnEntity('a-marker', { preset: 'hiro' });
-        // this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
-        // this.clickNum = AFRAME.$$('.clickable').length;
+        this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
+        this.clickNum = AFRAME.$$('.clickable').length;
+        this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
 
-        // this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
     },
     onLoaded: function (scene) { // after the scene is loaded.
-        return;
+        // return;
         this.intersectedEls = this.cursor.components.raycaster.intersectedEls;
 
         document.addEventListener('mousedown', this.mouseDown.bind(this));
         document.addEventListener('click', this.mouseDown.bind(this));
     },
     showResult: function (isPass) {
-        var text = isPass ? 'Pass!\nNext Level\n' : 'Again\n';
+        var text = isPass ? 'Pass!\n\nNext Level\n' : 'Again\n';
         var ts = Date.now() + 3000; // after 3 second
         var id = setInterval(function () {
             var now = Date.now();
@@ -89,8 +89,6 @@ var scene1 = {
             var sec = Math.ceil((ts - now) * 0.001);
             this.text.setAttribute('value', text + sec);
         }.bind(this), 200);
-        'Pass!\nNext Level\n3'
-
     },
     mouseDown: function () {
         var target = this.intersectedEls[0];
@@ -151,6 +149,4 @@ var scene1 = {
         document.removeEventListener('mousedown', this.mouseDown.bind(this));
         document.removeEventListener('click', this.mouseDown.bind(this));
     }
-};
-
-AFRAME.createAScene(scene1);
+});
