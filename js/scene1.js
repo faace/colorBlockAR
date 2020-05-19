@@ -51,6 +51,7 @@ AFRAME.createAScene({
     },
 
     onInit: function (scene) {
+        alert(1);
         this.lv = localStorage.lv || 0;
         if (this.lv >= datas.length) {
             alert('You have completed all levels!');
