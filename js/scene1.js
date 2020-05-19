@@ -8,8 +8,8 @@ AFRAME.createAScene({
     colors: ["#4CC3D9", "#EF2D5E", "#FFC65D", '#ec2def', '#2d3cef', '#1bec65', '#ecbf1b', '#ec1b1b', "#a8aae8", "#afe8a8", '#e8a8a8'], // #f55dff
     createABox: function (el, attr) {
         var attributes = {
-            scale: this.size * 1.1 + ' ' + ((this.size * 0.4)) + ' ' + this.size * 1.1,
-            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.2) + ' ' + (attr.z * this.size + this.gap),
+            scale: this.size + ' ' + ((this.size * 0.4)) + ' ' + this.size,
+            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.5) + ' ' + (attr.z * this.size + this.gap),
             color: attr.color
         };
         if (attr.id) attributes.id = attr.id;
