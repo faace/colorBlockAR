@@ -2,7 +2,8 @@ var scene1 = {
     id: 'scene1',
     attributes: {
         embedded: '',
-        arjs: 'sourceType: webcam; debugUIEnabled: false;',
+        // arjs: 'sourceType: webcam; debugUIEnabled: false;',
+        arjs: 'detectionMode: mono_and_matrix; matrixCodeType: 3x3;sourceType: webcam; debugUIEnabled: false;',
     },
     size: 0.2, // change according the map to make the plane is 1*1
     colors: ["#4CC3D9", "#EF2D5E", "#FFC65D", '#ec2def', '#2d3cef', '#1bec65', '#ecbf1b', '#ec1b1b', "#a8aae8", "#afe8a8", '#e8a8a8'], // #f55dff
