@@ -8,7 +8,7 @@ AFRAME.createAScene({
     colors: ["#4CC3D9", "#EF2D5E", "#FFC65D", '#ec2def', '#2d3cef', '#1bec65', '#ecbf1b', '#ec1b1b', "#a8aae8", "#afe8a8", '#e8a8a8'], // #f55dff
     createABox: function (el, attr) {
         var attributes = {
-            scale: this.size + ' ' + ((this.size * 0.2)) + ' ' + this.size,
+            scale: this.size * 1.1 + ' ' + ((this.size * 0.2)) + ' ' + this.size * 1.1,
             position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.1) + ' ' + (attr.z * this.size + this.gap),
             color: attr.color
         };
@@ -29,7 +29,7 @@ AFRAME.createAScene({
     creatTheMap: function (scene, attr) {
         var map = this.map = this.getMap();
         var mapLen = this.mapLen = map.length;
-        this.size = 1 / mapLen;
+        this.size = 2 / mapLen;
         this.gap = - mapLen * this.size * 0.5 + this.size * 0.5;
         var plane = scene.addAnEntity(
             'a-box#plane', { width: mapLen * this.size, height: this.size * 0.01, depth: mapLen * this.size, position: attr.position, rotation: attr.rotation, color: "#bbb0b0" },
