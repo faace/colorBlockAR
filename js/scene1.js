@@ -9,7 +9,7 @@ AFRAME.createAScene({
     createABox: function (el, attr) {
         var attributes = {
             scale: this.size * 1.1 + ' ' + ((this.size * 0.4)) + ' ' + this.size * 1.1,
-            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.1) + ' ' + (attr.z * this.size + this.gap),
+            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.2) + ' ' + (attr.z * this.size + this.gap),
             color: attr.color
         };
         if (attr.id) attributes.id = attr.id;
