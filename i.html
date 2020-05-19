@@ -24,7 +24,7 @@
     </a-scene> -->
 
     <script>
-        alert(7);
+        // alert(8);
         AFRAME.createAScene({
             id: 'scene1',
             attributes: {
@@ -103,6 +103,13 @@
                 //     'a-marker': { attributes: { preset: 'hiro' }, children: [{ 'a-box': {} }] },
                 //     'a-entity': { camera: '' }
                 // });
+            },
+            onLoaded: function (scene) { // after the scene is loaded.
+                // return;
+                this.intersectedEls = this.cursor.components.raycaster.intersectedEls;
+
+                document.addEventListener('mousedown', this.mouseDown.bind(this));
+                document.addEventListener('click', this.mouseDown.bind(this));
             },
             showResult: function (isPass) {
                 var text = isPass ? 'Pass!\nNext Level\n' : 'Again\n';
