@@ -14,3 +14,5 @@ Hi, It is time to bring out your dusted Hiro marker to enjoy this game. :)
 
 <img src="./img/hiro.png" width="250" />
 
+<img src="./img/a.gif" width="400" />
+
