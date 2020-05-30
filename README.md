@@ -13,5 +13,5 @@ https://faace.github.io/colorBlockAR/
 2. extend all the color blocks one by one(even though one hasn't space to extend).
 3. You will win if all the hollow cell is filled.
 
-<img src="https://faace.github.io/colorBlockAR/img/hiro.png" style="width:200px; height:200px"/>
+<img src="./img/hiro.png" width="250" />
 
