@@ -41,9 +41,18 @@ AFRAME.createAScene({
     getMap: function () {
         var map = datas[this.lv];
         if (!map) return alert('Cannot find Level ' + lv + '!');
+        var row = map.length;
+        var col = map[0].length;
         var newMap = [];
         for (var i = 0; i < map.length; i++) {
-            newMap.push(map[i].slice(0));
+            var line = map[i].slice(0);
+            for (var j = col; j < row; j++) line.push(1);
+            newMap.push(line);
+        }
+        for (var j = row; j < col; j++) {
+            var one = [];
+            for (var i = 0; i < col; i++)one.push(1);
+            newMap.push(one);
         }
         console.log(newMap);
         return newMap;
