@@ -2,8 +2,7 @@
 Hi, It is time to bring out your dusted Hiro marker to enjoy this game. :)
 
 ## How:
-1. Use your web brower(chrome) on you smart phone to open the link below:
-https://faace.github.io/colorBlockAR/
+1. Use your web brower(chrome) on you smart phone to open the link: https://faace.github.io/colorBlockAR/.
 2. permit the web to use you camera.
 3. scan the Hiro marker.
 4. Enjoy the game.
