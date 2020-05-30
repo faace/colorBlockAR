@@ -12,4 +12,4 @@ Rule:
 2. extend all the color blocks one by one(even though one hasn't space to extend).
 3. You will win if all the hollow cell is filled
 
-![image](https://faace.github.io/colorBlockAR/img/hiro.png)
+<div align=center><img width="100px" height="100px" src="https://faace.github.io/colorBlockAR/img/hiro.png /></div>
