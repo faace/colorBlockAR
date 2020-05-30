@@ -9,12 +9,34 @@ AFRAME.createAScene({
     createABox: function (el, attr) {
         var attributes = {
             scale: this.size + ' ' + ((this.size * 0.4)) + ' ' + this.size,
-            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.5) + ' ' + (attr.z * this.size + this.gap),
+            position: + (attr.x * this.size + this.gap) + ' ' + (this.size * 0.2) + ' ' + (attr.z * this.size + this.gap),
             color: attr.color
         };
         if (attr.id) attributes.id = attr.id;
         if (attr.class) attributes.class = attr.class;
         return el.addAnEntity('a-box', attributes);
+    },
+    createMergeBlocksInfo: function (map, mapLen) {
+        var zs = {}, one, has;
+        for (var z = 0; z < mapLen; z++) {
+            one = {};
+            has = false;
+            for (var x = 0; x < mapLen; x++) {
+                if (map[z][x] == 1) {
+                    one[x] = { color: '#ccc' };
+                    has = true;
+                }
+            }
+            if (has) zs[z] = one;
+        }
+        var info = {
+            width: this.size,
+            height: this.size * 0.4,
+            depth: this.size,
+            align: 'center bottom center',
+            map: { 0: zs }
+        }
+        return info;
     },
     getMap: function () {
         var map = datas[this.lv];
@@ -29,16 +51,20 @@ AFRAME.createAScene({
     creatTheMap: function (scene, attr) {
         var map = this.map = this.getMap();
         var mapLen = this.mapLen = map.length;
-        this.size = 2 / mapLen;
+        this.size = 1 / mapLen;
         this.gap = - mapLen * this.size * 0.5 + this.size * 0.5;
         var plane = scene.addAnEntity(
             'a-box#plane', { width: mapLen * this.size, height: this.size * 0.01, depth: mapLen * this.size, position: attr.position, rotation: attr.rotation, color: "#bbb0b0" },
         );
+
+        var info = this.createMergeBlocksInfo(map, mapLen);
+        plane.addAnEntity(
+            'a-mergedvoxels#plane', { src: JSON.stringify(info) },
+        );
         var idx = 0, box;
         for (var z = 0; z < mapLen; z++) {
             for (var x = 0; x < mapLen; x++) {
-                if (map[z][x] == 1) this.createABox(plane, { x: x, z: z, color: '#ccc' });
-                else if (map[z][x] == 2) {
+                if (map[z][x] == 2) {
                     box = this.createABox(plane, { id: idx, class: 'clickable', x: x, z: z, color: this.colors[idx] });
                     box.xx = x;
                     box.zz = z;
@@ -51,7 +77,6 @@ AFRAME.createAScene({
     },
 
     onInit: function (scene) {
-        alert(1);
         this.lv = localStorage.lv || 0;
         if (this.lv >= datas.length) {
             alert('You have completed all levels!');
@@ -63,15 +88,13 @@ AFRAME.createAScene({
         var camera = scene.addAnEntity('a-entity', { camera: '' });
         this.cursor = camera.addAnEntity('a-cursor', { fuse: true, fuseTimeout: 500, objects: '.clickable' });
 
-
         var marker = scene.addAnEntity('a-marker', { preset: 'hiro' });
         this.creatTheMap(marker, { position: '0 0 0', rotation: '0 0 0' });
         this.clickNum = AFRAME.$$('.clickable').length;
-        this.text = marker.addAnEntity('a-text', { value: "", position: '0 1 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
+        this.text = marker.addAnEntity('a-text', { value: "", position: '0 0.5 0', scale: '0.5 0.5 0.5', color: '#000', rotation: '-90 0 0', align: 'center' })
 
     },
     onLoaded: function (scene) { // after the scene is loaded.
-        // return;
         this.intersectedEls = this.cursor.components.raycaster.intersectedEls;
 
         document.addEventListener('mousedown', this.mouseDown.bind(this));
