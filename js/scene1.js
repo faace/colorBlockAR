@@ -31,9 +31,13 @@ AFRAME.createAScene({
         }
         var info = {
             width: this.size,
-            height: this.size * 0.4,
+            height: this.size * 0.35,
             depth: this.size,
             align: 'center bottom center',
+            options: {
+                polygonOffset: true,
+            },
+            // showFaces: { front: true, back: true, left: true, right: true, top: false, bottom: true },
             map: { 0: zs }
         }
         return info;
